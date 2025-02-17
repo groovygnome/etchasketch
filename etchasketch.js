@@ -1,9 +1,12 @@
 let container = document.querySelector(".container");
 let btn = document.querySelector(".reset");
+let randColor = document.querySelector(".randomColor");
+let opa = document.querySelector(".opacity");
 
 createGrid(container, 16);
 
 btn.addEventListener("click", () => { resetGrid(); });
+
 
 function resetGrid() {
     let gridSize = Number(prompt("What size would you like your grid to be? (Enter a number > 0 & <= 100)"));
@@ -26,7 +29,33 @@ function createGrid(containerElem, gridSize) {
         square.style.border = "1px solid black";
         square.style.width = boxSize;
         square.style.height = boxSize;
-        square.addEventListener("mouseover", () => { square.style.backgroundColor = "black"; });
+        let currOpa = 0.0;
+        let squareColorRand = randomColor();
+        let squareColorBlack = "rgba(0, 0, 0, ";
+        square.addEventListener("mouseover", () => {
+            let currSquareColorRand = squareColorRand;
+            let currSquareColorBlack = squareColorBlack;
+            if (opa.checked) {
+                currOpa += 0.1;
+                currSquareColorRand += currOpa + ")";
+                currSquareColorBlack += currOpa + ")";
+            } else {
+                currSquareColorRand += "1)";
+                currSquareColorBlack += "1)";
+            }
+            if (randColor.checked) {
+                square.style.backgroundColor = currSquareColorRand;
+            } else {
+                square.style.backgroundColor = currSquareColorBlack;
+            }
+        });
         containerElem.appendChild(square);
     }
+}
+
+function randomColor() {
+    let r = Math.floor(Math.random() * 255);
+    let g = Math.floor(Math.random() * 255);
+    let b = Math.floor(Math.random() * 255);
+    return "rgba(" + r + ", " + g + ", " + b + ", ";
 }
