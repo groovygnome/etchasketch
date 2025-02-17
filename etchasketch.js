@@ -3,13 +3,19 @@ let btn = document.querySelector(".reset");
 
 createGrid(container, 16);
 
+btn.addEventListener("click", () => { resetGrid(); });
 
 function resetGrid() {
-    let gridSize = Number(prompt("What size would you like your grid to be? (Enter a number <= 100)"));
+    let gridSize = Number(prompt("What size would you like your grid to be? (Enter a number > 0 & <= 100)"));
+    if (gridSize > 100 || gridSize <= 0) {
+        alert("Enter a number smaller than 100 or greater than 0!");
+        return;
+    }
     document.body.removeChild(container);
-    let newContainer = document.createElement("div");
-    newContainer.classList.add("container");
-    createGrid(newContainer, gridSize);
+    container = document.createElement("div");
+    container.classList.add("container");
+    document.body.appendChild(container);
+    createGrid(container, gridSize);
 }
 
 function createGrid(containerElem, gridSize) {
